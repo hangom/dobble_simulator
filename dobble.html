@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" class="page">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="robots" content="noindex, nofollow">
+	
+	<title>도블 시뮬레이터</title>
+
+	   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+        <style>
+            .card {
+                width: 200;
+                height: 200;
+                border-radius: 50%;
+                margin: 10px;
+                padding: 10px;
+                background-color: antiquewhite;
+                text-align: center;
+                overflow:hiddlen; 
+                word-break:break-all;
+            }
+        </style>
+</head>
+
+<body>
+
+    <div id="main">
+        n을 입력하세요: 
+        <input type="text" id="number" vlaue=2>
+        <button id="btSubmit">실행</button>
+        <div id='txt'></div>
+        <div id='result'></div>
+    </div>
+
+    <script src="projectPlain.js"></script>
+
+    <script>
+
+        const submitButton = document.getElementById('btSubmit');
+        submitButton.onclick = submitButtonClick;
+
+        function submitButtonClick(){
+            let num = parseInt(document.getElementById('number').value);
+            let line = getProjectivePlain(num);
+            $("#result").html('');
+            $("#txt").html('카드 장수 = 그림 개수 = ' + (num * num + num + 1));
+
+            for(let i=0;i<line.length;i++){
+                let newDiv = document.createElement('div');
+                newDiv.id = 'line'+i;
+                newDiv.className = 'card';
+                newDiv.innerHTML = line[i];
+                $("#result").append(newDiv);            
+            }
+
+        }
+
+    </script>
+</body>
