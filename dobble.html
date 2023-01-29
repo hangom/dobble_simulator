@@ -2,30 +2,19 @@
 <html lang="ko" class="page">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="robots" content="noindex, nofollow">
-	
-	<title>도블 시뮬레이터</title>
+        <meta name="robots" content="noindex, nofollow">
+        
+        <title>도블 시뮬레이터</title>
 
-	   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-        <style>
-            .card {
-                width: 200;
-                height: 200;
-                border-radius: 50%;
-                margin: 10px;
-                padding: 10px;
-                background-color: antiquewhite;
-                text-align: center;
-                overflow:hiddlen; 
-                word-break:break-all;
-            }
-        </style>
-</head>
+        <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Gugi&family=Jua&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="dobble.css" />	 
+	    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    </head>
 
 <body>
 
     <div id="main">
+        <h3>n차 사영평면을 이용한 도블 카드 배치 </h3>
         n을 입력하세요: 
         <input type="text" id="number" vlaue=2>
         <button id="btSubmit">실행</button>
@@ -36,25 +25,56 @@
     <script src="projectPlain.js"></script>
 
     <script>
+        const cardSize = 320; //카드 사이즈
+        const space = 40; // 여백
 
-        const submitButton = document.getElementById('btSubmit');
+        //실행 버튼 클릭시 설정
+        const submitButton = document.getElementById('btSubmit'); 
         submitButton.onclick = submitButtonClick;
+
+        let plain = []; //결과물 저장
+
+        //창 크기 조정시 배치 조정
+        window.onresize = function() {
+            setCards();
+        }
+
+        function setCards(){
+            const width = window.innerWidth;
+            const height = window.innerHeight;	
+            
+            const rowNumber = Math.floor(width / cardSize);
+
+            for (let i=0; i<plain.length; i++){
+                const left = 10 + (i % rowNumber) * cardSize;
+                const top = 130 + Math.floor(i / rowNumber) * cardSize;
+                
+                document.getElementById("line"+i).style.left = left+"px";
+                document.getElementById("line"+i).style.top = top+"px";
+            }
+        }
 
         function submitButtonClick(){
             let num = parseInt(document.getElementById('number').value);
-            let line = getProjectivePlain(num);
+            let k = Math.pow(num, 2) + num + 1;
+            plain = getProjectivePlain(num);
             $("#result").html('');
-            $("#txt").html('카드 장수 = 그림 개수 = ' + (num * num + num + 1));
+            $("#txt").html(
+                '카드 장수 = 그림 종류 수 = ' + k + ' (0 부터 '+ (k-1) +'까지)'
+                +'<br>카드 1장당 그림 개수 = ' + (num + 1) + '개'
+                );
 
-            for(let i=0;i<line.length;i++){
+            for(let i=0;i<plain.length;i++){
                 let newDiv = document.createElement('div');
                 newDiv.id = 'line'+i;
                 newDiv.className = 'card';
-                newDiv.innerHTML = line[i];
+                newDiv.innerHTML = plain[i];
+                newDiv.style.fontSize = 100/Math.sqrt(num)+'px';
                 $("#result").append(newDiv);            
             }
-
+            setCards();
         }
 
     </script>
 </body>
+</html>

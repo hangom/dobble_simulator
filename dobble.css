@@ -1,0 +1,26 @@
+.card {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: antiquewhite;
+    text-align: center;
+    overflow:hiddlen; 
+    word-break:break-all;
+    position:absolute;
+    font-family: 'Noto Sans KR'; 
+    font-weight: 700;
+    font-size: 30px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+.point {
+    position:absolute;
+    font-family: 'Noto Sans KR'; 
+    font-weight: 700;
+    font-size: 30px;
+    display : flex;
+    justify-content : center;
+    align-items : center;        
+    text-align: center;       
+}
