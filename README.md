@@ -1,2 +1,2 @@
 # dobble_simulator
- Find a Projective plane for make Dobble board game
+ Find a Projective plain for make Dobble board game
