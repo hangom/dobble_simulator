@@ -16,7 +16,7 @@
     <div id="main">
         <h3>n차 사영평면을 이용한 도블 카드 배치 </h3>
         n을 입력하세요: 
-        <input type="text" id="number" vlaue=2>
+        <input type="text" id="number" vlaue=2 onkeypress="click_check(event)">
         <button id="btSubmit">실행</button>
         <div id='txt'></div>
         <div id='result'></div>
@@ -39,7 +39,15 @@
             setCards();
         }
 
-        function setCards(){
+        function click_check(e){
+           var code = e.code;
+
+           if(code == 'Enter'){
+                submitButtonClick();
+           }
+        }
+
+        function setCards(){ // 카드 배치
             const width = window.innerWidth;
             const height = window.innerHeight;	
             
@@ -54,25 +62,40 @@
             }
         }
 
-        function submitButtonClick(){
+        function submitButtonClick(){ //실행 버튼 클릭시
             let num = parseInt(document.getElementById('number').value);
             let k = Math.pow(num, 2) + num + 1;
             plain = getProjectivePlain(num);
-            $("#result").html('');
-            $("#txt").html(
-                '카드 장수 = 그림 종류 수 = ' + k + ' (0 부터 '+ (k-1) +'까지)'
-                +'<br>카드 1장당 그림 개수 = ' + (num + 1) + '개'
-                );
 
-            for(let i=0;i<plain.length;i++){
-                let newDiv = document.createElement('div');
-                newDiv.id = 'line'+i;
-                newDiv.className = 'card';
-                newDiv.innerHTML = plain[i];
-                newDiv.style.fontSize = 100/Math.sqrt(num)+'px';
-                $("#result").append(newDiv);            
+            if(plain.length>0){
+                $("#result").html('');
+                $("#txt").html(
+                    '카드 장수 = 그림 종류 수 = ' + k + ' (0 부터 '+ (k-1) +'까지)'
+                    +'<br>카드 1장당 그림 개수 = ' + (num + 1) + '개'
+                    );
+
+                for(let i=0;i<plain.length;i++){
+                    let newDiv = document.createElement('div');
+                    newDiv.id = 'line'+i;
+                    newDiv.className = 'card';
+                    newDiv.innerHTML = plain[i];
+                    newDiv.style.fontSize = 100/Math.sqrt(num)+'px';
+                    $("#result").append(newDiv);            
+                }
+                setCards();
+            }else if(num == 6 || num ==10){
+                $("#result").html('');
+                $("#txt").html(
+                    'n = '+num+' 으로는 사영평면을 만들 수 없습니다.'
+                    );               
+            }else {
+                $("#result").html('');
+                $("#txt").html(
+                    'n = '+num+' 으로 사영평면을 만들지 못했습니다.'
+                    );
             }
-            setCards();
+
+
         }
 
     </script>
