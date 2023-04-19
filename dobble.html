@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko" class="page">
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="robots" content="noindex, nofollow">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+		<meta name="robots" content="noindex, nofollow">
         
         <title>도블 시뮬레이터</title>
 
@@ -52,14 +53,6 @@
             const height = window.innerHeight;	
             
             const rowNumber = Math.floor(width / cardSize);
-
-            for (let i=0; i<plain.length; i++){
-                const left = 10 + (i % rowNumber) * cardSize;
-                const top = 130 + Math.floor(i / rowNumber) * cardSize;
-                
-                document.getElementById("line"+i).style.left = left+"px";
-                document.getElementById("line"+i).style.top = top+"px";
-            }
         }
 
         function submitButtonClick(){ //실행 버튼 클릭시
@@ -79,7 +72,16 @@
                     newDiv.id = 'line'+i;
                     newDiv.className = 'card';
                     newDiv.innerHTML = plain[i];
-                    newDiv.style.fontSize = 100/Math.sqrt(num)+'px';
+                    console.log(plain[i]);
+                    let nums = newDiv.innerHTML.split(',');
+                    let newText = '';
+                    for(let i = 0; i < nums.length; i++){
+                        newText += '<span>' + nums[i] + '</span>';
+                    }
+                    newDiv.innerHTML = '<div class="right">'+newText+'</div>';
+                    if(num!==1) {
+                        newDiv.style.fontSize = 80/Math.sqrt(num)+'px';
+                    }
                     $("#result").append(newDiv);            
                 }
                 setCards();
